@@ -5,16 +5,24 @@ import javax.swing.JOptionPane;
 import org.jpl7.Query;
 import org.jpl7.Term;
 
+/**
+ * This class is a solver of the N queens problem, where N is at most 8.
+ */
 public class PuzzleSolver {
 
+	// JPanel where a chess board is displayed
 	private ChessBoardPanel board;
 
+	// Current Prolog query
 	private Query query;
 
 	public PuzzleSolver(ChessBoardPanel board) {
 		this.board = board;
 	}
 
+	// Solves the N queens problem with a given board size and obtains the first
+	// solution. The Prolog query issused in this method is stored in the instance
+	// variable "query" for later use.
 	public void solve(int boardSize) {
 		String t1 = "consult('queens.pl')";
 		System.out.println(t1 + " " + (Query.hasSolution(t1) ? "succeeded" : "failed"));
@@ -25,6 +33,7 @@ public class PuzzleSolver {
 		nextSolution();
 	}
 
+	// Obtains the next solution if it exists. 
 	public void nextSolution() {
 		if (query == null) {
 			JOptionPane.showMessageDialog(null, "Click 'Solve' first.", "Error", JOptionPane.ERROR_MESSAGE);
@@ -36,6 +45,7 @@ public class PuzzleSolver {
 		}
 	}
 
+	// Displays a solution on the chess board.
 	private void displayResult(Term answer) {
 		Term[] resultArray = answer.toTermArray();
 		int len = resultArray.length;
@@ -46,6 +56,7 @@ public class PuzzleSolver {
 		refresh(result);
 	}
 
+	// Refreshes the chess board. 
 	private void refresh(Coordinate[] result) {
 		board.setBoardSize(result.length);
 		board.setCoordinate(result);

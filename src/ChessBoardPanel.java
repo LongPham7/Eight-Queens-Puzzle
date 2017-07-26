@@ -7,18 +7,25 @@ import java.io.IOException;
 import javax.imageio.ImageIO;
 import javax.swing.*;
 
+/** 
+ * This class implements a panel where a chess board is displayed. 
+ * */
 public class ChessBoardPanel extends JPanel {
 
 	// Default serial version UID
 	private static final long serialVersionUID = 1L;
 
+	// Coordinates of queens
 	private Coordinate[] coordinates;
+	
 	private int boardSize = 8;
 
+	// Updates the locations of queens.
 	public void setCoordinate(Coordinate[] coordinate) {
 		this.coordinates = coordinate;
 	}
 
+	// Updates the size of the chess board. 
 	public void setBoardSize(int boardSize) {
 		assert 0 < boardSize && boardSize <= 8;
 		this.boardSize = boardSize;
@@ -34,6 +41,7 @@ public class ChessBoardPanel extends JPanel {
 		placeQueens(g2);
 	}
 
+	// Paints the chess board. 
 	private void drawBoard(Graphics2D g) {
 		setBackground(Color.WHITE);
 		g.draw(new Line2D.Double(10, 10, 410, 10));
@@ -47,6 +55,7 @@ public class ChessBoardPanel extends JPanel {
 		}
 	}
 
+	// Shades appropriate cells on the chess board to produce a checked pattern.
 	private void shadeCell(Graphics2D g, int x, int y) {
 		double width = 400.0 / boardSize;
 		double topX = 10 + width * x;
@@ -55,6 +64,7 @@ public class ChessBoardPanel extends JPanel {
 		g.fill(new Rectangle2D.Double(topX, topY, width, width));
 	}
 
+	// Places queens at coordinates in the array "coordinates". 
 	private void placeQueens(Graphics2D g) {
 		if (coordinates != null) {
 			for (int i = 0; i != coordinates.length; i++) {
@@ -64,6 +74,7 @@ public class ChessBoardPanel extends JPanel {
 		}
 	}
 
+	// Places a queen at a specified coordinate. 
 	private void placeQueen(Graphics2D g, Coordinate co) {
 		BufferedImage img = null;
 		try {

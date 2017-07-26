@@ -2,6 +2,10 @@ import java.awt.*;
 import java.awt.event.*;
 import javax.swing.*;
 
+/**
+ * This class implements a view in the MVC architecture, creating GUI components
+ * for a main frame where users can specify the size of a chess board. 
+ */
 public class AppFrame {
 
 	private JFrame frame;
@@ -19,6 +23,7 @@ public class AppFrame {
 
 	private JComboBox<Integer> boardSizeSelector;
 
+	// Creates GUI components for the main frame.
 	public void activate() {
 		frame = new JFrame("Eight Queens Problem");
 
@@ -68,14 +73,14 @@ public class AppFrame {
 		panel.add(component, c);
 	}
 
-	// Action listener for a button
+	// Action listener for a button to work out the first solution
 	class Button1Listener implements ActionListener {
 		public void actionPerformed(ActionEvent event) {
 			solver.solve((int) boardSizeSelector.getSelectedItem());
 		}
 	}
 
-	// Action listener for a button
+	// Action listener for a button to obtain the next solution
 	class Button2Listener implements ActionListener {
 		public void actionPerformed(ActionEvent event) {
 			solver.nextSolution();
