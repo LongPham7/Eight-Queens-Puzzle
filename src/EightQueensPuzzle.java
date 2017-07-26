@@ -2,9 +2,9 @@ import org.jpl7.JPL;
 import org.jpl7.Query;
 import org.jpl7.Term;
 
-/** 
- * This is an entry point to the application. 
- * */
+/**
+ * This is an entry point to the application.
+ */
 public class EightQueensPuzzle {
 
 	private AppFrame app = new AppFrame();

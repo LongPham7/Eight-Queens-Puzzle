@@ -8,47 +8,50 @@ public class AppFrame {
 
 	private JPanel panel1;
 	private JPanel panel2;
-	private JPanel grid;
+	private ChessBoardPanel board = new ChessBoardPanel();;
+
+	private PuzzleSolver solver = new PuzzleSolver(board);
 
 	private JLabel label1;
 
 	private JButton button1;
 	private JButton button2;
 
-	private JComboBox<String> gridSizeSelector;
+	private JComboBox<Integer> boardSizeSelector;
 
 	public void activate() {
 		frame = new JFrame("Eight Queens Problem");
 
 		panel1 = new JPanel();
 		panel2 = new JPanel();
-		grid = new ChessBoardPanel();
 
 		frame.getContentPane().add(BorderLayout.NORTH, panel1);
 		frame.getContentPane().add(BorderLayout.CENTER, panel2);
 
-		label1 = new JLabel("Select the grid size: ");
+		label1 = new JLabel("Select the board size: ");
 
 		button1 = new JButton("Solve");
 		button2 = new JButton("Next solution");
 
-		String[] gridSize = { "1", "2", "3", "4", "5", "6", "7", "8" };
-		gridSizeSelector = new JComboBox<String>(gridSize);
-		gridSizeSelector.setSelectedIndex(7);
+		Integer[] boardSize = { 1, 2, 3, 4, 5, 6, 7, 8 };
+		boardSizeSelector = new JComboBox<Integer>(boardSize);
+		boardSizeSelector.setSelectedIndex(7);
 
 		panel1.setLayout(new GridBagLayout());
 		addComponent(label1, panel1, 0, 0, 1);
-		addComponent(gridSizeSelector, panel1, 1, 0, 1);
+		addComponent(boardSizeSelector, panel1, 1, 0, 1);
 		addComponent(button1, panel1, 0, 1, 2);
 		addComponent(button2, panel1, 0, 2, 2);
 		panel1.setBorder(BorderFactory.createTitledBorder("Control Panel"));
 
 		panel2.setLayout(new GridBagLayout());
-		addComponent(grid, panel2, 0, 0, 1);
+		addComponent(board, panel2, 0, 0, 1);
 		panel2.setBorder(BorderFactory.createTitledBorder("Chess Board"));
 
-		button1.addActionListener(new ButtonListener());
-		button2.addActionListener(new ButtonListener());
+		board.setPreferredSize(new Dimension(420, 420));
+
+		button1.addActionListener(new Button1Listener());
+		button2.addActionListener(new Button2Listener());
 
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.setSize(500, 600);
@@ -66,10 +69,16 @@ public class AppFrame {
 	}
 
 	// Action listener for a button
-	class ButtonListener implements ActionListener {
+	class Button1Listener implements ActionListener {
 		public void actionPerformed(ActionEvent event) {
-
+			solver.solve((int) boardSizeSelector.getSelectedItem());
 		}
 	}
 
+	// Action listener for a button
+	class Button2Listener implements ActionListener {
+		public void actionPerformed(ActionEvent event) {
+			solver.nextSolution();
+		}
+	}
 }
